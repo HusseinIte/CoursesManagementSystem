@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::apiResource('courses', CourseController::class);
+Route::get('courses/{id}/students', [CourseController::class, 'getCourseStudents']);
+
 Route::apiResource('instructors', InstructorController::class);
+Route::get('instructors/{id}/courses', [InstructorController::class, 'getInstructorCourses']);
+Route::get('instructors/{id}/students', [InstructorController::class, 'getInstructorStudents']);
+
+
 Route::apiResource('students', StudentController::class);
-Route::post('students/{id}/courses',[StudentController::class,'registerStudentInCourse']);
+Route::post('students/{id}/courses', [StudentController::class, 'registerStudentInCourse']);

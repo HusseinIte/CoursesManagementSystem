@@ -27,7 +27,7 @@ class InstructorStudentsResource extends JsonResource
                     'created_at' => $courseStudent->student->created_at,
                     'updated_at' => $courseStudent->student->updated_at,
                 ];
-            }),
+            })->unique('id')->values(),
         ];
     }
 }

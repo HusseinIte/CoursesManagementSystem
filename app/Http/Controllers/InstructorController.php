@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Instructor\StoreInstructorRequest;
 use App\Http\Requests\Instructor\UpdateInstructorRequest;
+use App\Http\Resources\InstructorStudentsResource;
 use App\Models\Instructor;
 use App\Services\InstructorService;
 use Exception;
@@ -78,6 +79,15 @@ class InstructorController extends Controller
         try {
             $this->instructorService->deleteInstructor($id);
             return $this->sendRespons(null, "Insrtuctor deleted successfully");
+        } catch (Exception $e) {
+            return $this->sendError(null, $e->getMessage());
+        }
+    }
+    public function getInstructorStudents($instructorId)
+    {
+        try {
+            $students = $this->instructorService->getInstructorStudents($instructorId);
+            return $this->sendRespons(new InstructorStudentsResource($students), "students retrieved successfully");
         } catch (Exception $e) {
             return $this->sendError(null, $e->getMessage());
         }

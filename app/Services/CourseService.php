@@ -99,4 +99,20 @@ class CourseService
             throw new Exception("An expected error while deleting course");
         }
     }
+
+    public function getCourseStudents($courseId)
+    {
+        try {
+            $course = Course::findOrFail($courseId);
+            $students = $course->students;
+            Log::info("Students for course id $courseId retrieved successfully");
+            return $students;
+        } catch (ModelNotFoundException $e) {
+            Log::error("Course id $courseId not found for retrieving students: " . $e->getMessage());
+            throw new Exception("Course Not Found");
+        } catch (Exception $e) {
+            Log::error("An unexpected error while get students for course id $courseId : " . $e->getMessage());
+            throw new Exception("An unexpected error while retrieving students for course");
+        }
+    }
 }

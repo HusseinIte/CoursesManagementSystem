@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+
 abstract class Controller
 {
     public function sendRespons($data, $message, $code = 200)

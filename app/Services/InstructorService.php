@@ -97,4 +97,36 @@ class InstructorService
             throw new Exception("An expected error while deleting instructor");
         }
     }
+
+    public function getInstructorCourses($instructorId)
+    {
+        try {
+            $instructor = Instructor::findOrFail($instructorId);
+            $courses = $instructor->courses;
+            Log::info("Courses for Instructor id $instructorId retrieved successfully");
+            return $courses;
+        } catch (ModelNotFoundException $e) {
+            Log::error("Instructor id $instructorId not found for retrieving courses: " . $e->getMessage());
+            throw new Exception("Instructor Not Found");
+        } catch (Exception $e) {
+            Log::error("An unexpected error while retrieving courses for instructor id $instructorId : " . $e->getMessage());
+            throw new Exception("An unexpected error while retrieving courses for instructor");
+        }
+    }
+
+    public function getInstructorStudents($instructorId)
+    {
+        try {
+            $instructor = Instructor::findOrFail($instructorId);
+            $students = $instructor->load('studentsInMyCourses') ;
+            Log::info("Students for Instructor id $instructorId retrieved successfully");
+            return $students;
+        } catch (ModelNotFoundException $e) {
+            Log::error("Instructor id $instructorId not found for retrieving students: " . $e->getMessage());
+            throw new Exception("Instructor Not Found");
+        } catch (Exception $e) {
+            Log::error("An unexpected error while retrieving students for instructor id $instructorId : " . $e->getMessage());
+            throw new Exception("An unexpected error while retrieving students for instructor");
+        }
+    }
 }

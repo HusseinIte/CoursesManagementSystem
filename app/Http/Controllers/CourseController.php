@@ -81,4 +81,13 @@ class CourseController extends Controller
             return $this->sendError(null, $e->getMessage());
         }
     }
+    public function getCourseStudents($courseId)
+    {
+        try {
+            $students = $this->courseService->getCourseStudents($courseId);
+            return $this->sendRespons($students, "Students for course retrieved successfully");
+        } catch (Exception $e) {
+            return $this->sendError(null, $e->getMessage());
+        }
+    }
 }
